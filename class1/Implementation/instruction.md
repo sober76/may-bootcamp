@@ -38,7 +38,11 @@ chmod +x monitor_container.sh
 ### 1. Launch Everything
 ```bash
 # Start application and monitoring
+
+docker-compose up --build 
+# or
 docker-compose up -d
+
 
 # Check if everything is running
 docker ps

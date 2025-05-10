@@ -13,6 +13,12 @@
 # Using awk for memory information
 ######################################
 
+
+# $1 -> first argyment
+# $2 -> second argument
+# $0
+# $#
+
 # Check for command line arguments
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <filename> [search_term]"

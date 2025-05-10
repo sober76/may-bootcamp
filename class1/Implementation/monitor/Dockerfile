@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
@@ -15,7 +15,7 @@ RUN pip install flask
 WORKDIR /app
 
 # Copy monitoring script and dashboard
-COPY monitor_container.sh /app/
+COPY monitor_container.sh /app/monitor_container.sh
 COPY dashboard.py /app/
 
 # Make scripts executable

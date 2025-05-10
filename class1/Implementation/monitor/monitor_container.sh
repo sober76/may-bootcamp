@@ -11,9 +11,9 @@ ALERT_LOG="/var/log/container_alerts.log"
 METRICS_FILE="/var/log/container_metrics.csv"
 
 # Thresholds
-CPU_THRESHOLD=40      # 40% of allocated CPU
-MEMORY_THRESHOLD=80   # 80% of allocated memory
-RESPONSE_TIME_THRESHOLD=1000  # 1 second in milliseconds
+CPU_THRESHOLD="$CPU_THRESHOLD"     # 40% of allocated CPU
+MEMORY_THRESHOLD="$MEMORY_THRESHOLD"  # 80% of allocated memory
+RESPONSE_TIME_THRESHOLD="$RESPONSE_TIME_THRESHOLD"  # 1 second in milliseconds
 
 # Initialize log files
 initialize_logs() {
@@ -80,7 +80,11 @@ get_container_stats() {
 # Check application health
 check_app_health() {
     local start_time=$(date +%s%3N)
-    local response=$(curl -s -w "\n%{http_code}" http://localhost:8080/health 2>/dev/null)
+    
+    # Use the container name to check health
+    # Fix: Use the actual container name from the docker network
+    local response=$(curl -s -w "\n%{http_code}" http://${CONTAINER_NAME}:80/health 2>/dev/null)
+    
     local end_time=$(date +%s%3N)
     
     local http_code=$(echo "$response" | tail -n1)
@@ -123,11 +127,11 @@ monitor_container() {
     log_message "INFO" "CPU: ${cpu}%, Memory: ${mem_usage_mb}MB (${mem_percent}%), Response Time: ${response_time}ms, Status: $app_status"
     
     # Check thresholds and send alerts
-    if (( $(echo "$cpu > $CPU_THRESHOLD" | bc -l) )); then
+    if (( $(echo "$cpu > $CPU_THRESHOLD" | bc -l 2>/dev/null) )); then
         send_alert "High CPU" "CPU usage is ${cpu}% (threshold: ${CPU_THRESHOLD}%)"
     fi
     
-    if (( $(echo "$mem_percent > $MEMORY_THRESHOLD" | bc -l) )); then
+    if (( $(echo "$mem_percent > $MEMORY_THRESHOLD" | bc -l 2>/dev/null) )); then
         send_alert "High Memory" "Memory usage is ${mem_percent}% (threshold: ${MEMORY_THRESHOLD}%)"
     fi
     
@@ -177,14 +181,14 @@ generate_report() {
 draw_bar() {
     local value=$1
     local width=$2
-    local filled=$(printf "%.0f" $(echo "$value * $width / 100" | bc -l))
+    local filled=$(printf "%.0f" $(echo "$value * $width / 100" | bc -l 2>/dev/null || echo "0"))
     local empty=$((width - filled))
     
     # Color codes based on value
     local color="\e[32m"  # Green
-    if (( $(echo "$value > 80" | bc -l) )); then
+    if (( $(echo "$value > 80" | bc -l 2>/dev/null || echo "0") )); then
         color="\e[31m"    # Red
-    elif (( $(echo "$value > 60" | bc -l) )); then
+    elif (( $(echo "$value > 60" | bc -l 2>/dev/null || echo "0") )); then
         color="\e[33m"    # Yellow
     fi
     
@@ -261,12 +265,12 @@ live_monitor() {
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         
         local alerts=0
-        if (( $(echo "$cpu > $CPU_THRESHOLD" | bc -l) )); then
+        if (( $(echo "$cpu > $CPU_THRESHOLD" | bc -l 2>/dev/null || echo "0") )); then
             echo "🔴 HIGH CPU: ${cpu}% (threshold: ${CPU_THRESHOLD}%)"
             ((alerts++))
         fi
         
-        if (( $(echo "$mem_percent > $MEMORY_THRESHOLD" | bc -l) )); then
+        if (( $(echo "$mem_percent > $MEMORY_THRESHOLD" | bc -l 2>/dev/null || echo "0") )); then
             echo "🔴 HIGH MEMORY: ${mem_percent}% (threshold: ${MEMORY_THRESHOLD}%)"
             ((alerts++))
         fi
@@ -295,9 +299,8 @@ live_monitor() {
         echo ""
         echo "Press Ctrl+C to exit"
         
-        # Log metrics for dashboard
-        local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-        echo "$timestamp,$cpu,$mem_usage_mb,$mem_percent,$response_time,$app_status" >> "$METRICS_FILE"
+        # Log metrics for monitoring
+        monitor_container
         
         # Sleep for refresh interval
         sleep 2
