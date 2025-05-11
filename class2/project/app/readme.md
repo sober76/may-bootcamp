@@ -1,7 +1,12 @@
-docker-compose build
+
+
+cd ~/devops-bootcamp/may-bootcamp/class2/project/app
+
+docker-compose up --build
+
+# or 
 
 docker-compose up -d
-
 
 # Access the app
 
