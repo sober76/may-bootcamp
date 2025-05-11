@@ -17,6 +17,7 @@
 # ========================================
 
 # Container name to monitor - can be overridden by environment variable
+# ${variable:-default} - Use default if variable is unset or empty
 # Example: CONTAINER_NAME="nginx-server" ./monitor.sh
 CONTAINER_NAME="${CONTAINER_NAME:-monitored-app}"
 

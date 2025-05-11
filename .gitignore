@@ -177,3 +177,5 @@ cython_debug/
 # log files
 *.log
 *.csv
+
+.env

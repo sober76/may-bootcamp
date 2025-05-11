@@ -63,7 +63,8 @@ services:
       - web-app
     environment:
       - TARGET_URL=http://web-app
-      - STRESS_LEVEL=low
+      - STRESS_LEVEL=extreme
+      # low, medium, high, extreme, cpu-intensive, memory-intensive
     networks:
       - monitor-network
 
@@ -89,8 +90,30 @@ services:
     # command: ["sh", "-c", "python3 dashboard.py"]
     command: ["sh", "-c", "python3 dashboard.py & ./monitor_container.sh live"]
     # command: ["sh", "-c", "python3 dashboard.py & ./monitor_container.sh live"]
+    networks:
+      - monitor-network
 
-
+  alert-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.alert
+    container_name: alert-service
+    volumes:
+      - ./logs:/var/log:ro  # Read-only access to log files
+    environment:
+      - CONTAINER_NAME=monitored-app
+      - ALERT_LOG=/var/log/container_alerts.log
+      - AWS_REGION=${AWS_REGION:-ap-south-1}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - RECIPIENT_EMAILS=${RECIPIENT_EMAILS}
+      - CHECK_INTERVAL=${CHECK_INTERVAL:-30}
+      - ALERT_COOLDOWN=${ALERT_COOLDOWN:-300}
+      - BUFFER_TIMEOUT=${BUFFER_TIMEOUT:-60}
+    depends_on:
+      - monitor
+    restart: unless-stopped
     networks:
       - monitor-network
 

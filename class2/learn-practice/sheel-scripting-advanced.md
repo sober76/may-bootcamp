@@ -2911,6 +2911,12 @@ main() {
 main "$@"
 ```
 
+## 
+# ${var-default} - Use default only if var is unset (not if empty)
+# ${variable:-default} - Use default if variable is unset or empty
+# ${var:=default} - Assign default to var if unset/empty
+# ${var+replacement} - Use replacement if var is set
+# ${var:?error message} - Display error if var is unset/empty
 ## Conclusion
 
 This comprehensive guide covers advanced shell scripting techniques specifically tailored for DevOps automation:
