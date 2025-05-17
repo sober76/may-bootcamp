@@ -1,0 +1,20 @@
+
+
+
+aws cli install
+
+aws configure
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 879381241087.dkr.ecr.ap-south-1.amazonaws.com
+
+postgres
+admin12345
+studentportal
+
+DB_LINK='postgresql://postgres:admin12345@student-portal.cvik8accw2tk.ap-south-1.rds.amazonaws.com:5432/studentportal'
+
+
+
+docker run -td --name stpor -p 8000:8000 \
+ -e DB_LINK='postgresql://postgres:admin12345@student-portal.cvik8accw2tk.ap-south-1.rds.amazonaws.com:5432/studentportal' \
+ student-portal
