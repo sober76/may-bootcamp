@@ -53,3 +53,9 @@ DB_LINK='postgresql://postgres:admin12345@studentportal.cvik8accw2tk.ap-south-1.
 - access the application on public ip for task to test
 - now use alb dns to access the application
 - troubleshoot
+
+
+
+
+
+# DB_LINK='postgresql://postgres:admin12345@prod-spdb.cvik8accw2tk.ap-south-1.rds.amazonaws.com:5432/prodsp'

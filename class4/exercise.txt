@@ -46,3 +46,15 @@ step6: create a certificate with aws acm
 step7: Do the certificate validation with the domain
 step8: create a https listener 
 step9: access the app on domain name on https 
+
+
+
+
+
+
+## Cleanup
+1. delete the ecs cluster, it will delete all resources. 
+2. delete rds instance
+3. delete nat gateway 
+4. detach elastic ips
+5. delete Network
