@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   # This event allows you to manually trigger the workflow from the GitHub UI.
 
-  inputs:
+  input:
     name:
       description: 'give me your name'
       required: true
