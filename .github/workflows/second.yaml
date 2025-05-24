@@ -1,0 +1,29 @@
+name: manual 
+
+on:
+  workflow_dispatch:
+  # This event allows you to manually trigger the workflow from the GitHub UI.
+
+  inputs:
+    name:
+      description: 'give me your name'
+      required: true
+
+    mobile:
+      description: 'give me your mobile number'
+      required: false
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: intro
+        run: "hi ${{ github.event.inputs.name }}"
+      - name: mobile
+        run: |
+          if [ -z "${{ github.event.inputs.mobile }}" ]; then
+            echo "No mobile number provided."
+          else
+            echo "Your mobile number is ${{ github.event.inputs.mobile }}"
+          fi

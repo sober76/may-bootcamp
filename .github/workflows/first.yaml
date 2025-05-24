@@ -2,7 +2,9 @@
 name: First workflow
 
 on:
- push
+ push :
+   branches:
+     - main
 
 # definig a env
 env:
@@ -59,6 +61,7 @@ jobs:
         run: |
           echo "This is an environment variable from ste2"
           echo "This is an environment variable from step ${{ env.MY__STEP_ENV_VAR }}"
+          echo "This is an environment variable from step $MY__STEP_ENV_VAR"
 
 
  
