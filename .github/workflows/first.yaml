@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: run 1 shell command
-        run: echo "Hello, World!"
+        runs: echo "Hello, World!"
 
       - name: run 2 shell commands
         runs: |
