@@ -30,12 +30,12 @@ jobs:
 
     steps:
       - name: Intro
-        run: echo "Hi ${{ github.event.inputs.name }}"
+        run: echo "Hi ${{ inputs.name }}"
         
       - name: Mobile
         run: |
-          if [ -z "${{ github.event.inputs.mobile }}" ]; then
+          if [ -z "${{ inputs.mobile }}" ]; then
             echo "No mobile number provided."
           else
-            echo "Your mobile number is ${{ github.event.inputs.mobile }}"
+            echo "Your mobile number is ${{ inputs.mobile }}"
           fi
