@@ -30,12 +30,14 @@ jobs:
 
     steps:
       - name: Intro
-        run: echo "Hi ${{ inputs.name }}"
+        run: echo "Hi "
+      # - name: Intro
+      #   run: echo "Hi ${{ inputs.name }}"
         
-      - name: Mobile
-        run: |
-          if [ -z "${{ inputs.mobile }}" ]; then
-            echo "No mobile number provided."
-          else
-            echo "Your mobile number is ${{ inputs.mobile }}"
-          fi
+      # - name: Mobile
+      #   run: |
+      #     if [ -z "${{ inputs.mobile }}" ]; then
+      #       echo "No mobile number provided."
+      #     else
+      #       echo "Your mobile number is ${{ inputs.mobile }}"
+      #     fi
