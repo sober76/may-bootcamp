@@ -39,6 +39,3 @@ jobs:
           else
             echo "Your mobile number is ${{ github.event.inputs.mobile }}"
           fi
-          
-      - name: Reason
-        run: echo "Reason for joining: ${{ github.event.inputs.why }}"
