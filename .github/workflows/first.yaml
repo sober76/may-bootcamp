@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: run 1 shell command
-        runs: echo "Hello, World!"
+        run: echo "Hello, World!"
 
       - name: run 2 shell commands
-        runs: |
+        run: |
           echo "this is where i will run the second command"
           date
           pwd
