@@ -42,4 +42,4 @@ jobs:
           fi
           
       - name: Reason
-        run: echo "Reason for joining: ${{ github.event.inputs.why }}"
+        run: echo " Reason for joining ${{ github.event.inputs.why }}"
