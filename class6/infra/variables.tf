@@ -47,6 +47,10 @@ variable "db_default_settings" {
 
 
 # application details
+
+variable "app_domain" {
+  default = "akhileshmishra.tech"
+}
 variable "tag" {
   description = "value for the tag"
   default     = "latest"
