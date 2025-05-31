@@ -68,11 +68,6 @@ resource "aws_ecs_service" "flask_app_service" {
     container_port   = 8000
   }
 
-  depends_on = [
-    # aws_lb_listener.https_forward,
-    aws_iam_role_policy.ecs_task_execution_role,
-  ]
-
   tags = {
     Environment = var.environment
     Application = "flask-app"
