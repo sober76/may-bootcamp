@@ -13,7 +13,6 @@ env:
   AWS_REGION: ap-south-1
   IMAGE_REPO_NAME: 879381241087.dkr.ecr.ap-south-1.amazonaws.com/bootcamp-dev-student-portal
   IMAGE_TAG: latest
-  PATH: ${{ github.workspace }}/class6/src
 
 jobs:
     build:
@@ -37,7 +36,7 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v6
           with:
-            context: ${{ env.PATH }}
+            context: "{{defaultContext}}:class6/src"
             push: true
             tags: ${{ env.IMAGE_REPO_NAME }}:${{ env.IMAGE_TAG }}
 # aws login
