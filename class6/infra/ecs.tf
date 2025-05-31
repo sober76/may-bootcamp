@@ -18,3 +18,13 @@ resource "aws_security_group" "ecs" {
   }
 
 }
+
+# ecs cluster
+resource "aws_ecs_cluster" "main" {
+  name = "${var.environment}-${var.app_name}-cluster"
+}
+# ecs task definition
+
+
+
+# ecs service 
