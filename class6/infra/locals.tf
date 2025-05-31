@@ -12,8 +12,6 @@ locals {
   }
 }
 
-# variable  -> user input (if no nuser input then use default)
-
 
 # "postgresql://${aws_db_instance.postgres.username}:${random_password.dbs_random_string.result}@${aws_db_instance.postgres.address}:${aws_db_instance.postgres.port}/${aws_db_instance.postgres.db_name}"
 # 'postgresqql://{userbanme}:{password}@{host}:{port}/{db_name}'
