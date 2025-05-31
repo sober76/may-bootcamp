@@ -13,8 +13,8 @@
     },
     "portMappings": [
       {
-        "containerPort": 8000,
-        "hostPort": 8000,
+        "containerPort": ${container_port},
+        "hostPort": ${container_name},
         "protocol": "tcp",
         "name": "flask",
         "appProtocol": "http"
