@@ -49,7 +49,7 @@ variable "db_default_settings" {
 # application details
 variable "tag" {
   description = "value for the tag"
-  default =  "latest"
+  default     = "latest"
 }
 variable "container_name" {
   default = "student-portal"
@@ -71,5 +71,5 @@ variable "student_portal_app_memory" {
 variable "desired_container_count" {
   description = "The number of desired containers for the ECS service"
   default     = 2
-  
+
 }

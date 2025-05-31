@@ -1,6 +1,6 @@
 locals {
-  
-   student_portals_services_vars = {
+
+  student_portals_services_vars = {
     aws_ecr_repository            = aws_ecr_repository.student_portal_app.repository_url
     tag                           = var.tag
     container_name                = var.container_name
