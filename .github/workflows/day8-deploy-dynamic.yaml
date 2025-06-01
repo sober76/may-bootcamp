@@ -5,6 +5,7 @@ on:
 
 env:
   environment: "dev"
+  region: "ap-south-1"
   secret: "student-portal-deploy-data"
 
 jobs:
@@ -46,7 +47,7 @@ jobs:
       - name: Build docker container
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:app"
+          context: "{{defaultContext}}:class6/src"
           tags: ${{ github.sha }}
           build-args: APP_VERSION=${{ github.sha }}
           push: false
