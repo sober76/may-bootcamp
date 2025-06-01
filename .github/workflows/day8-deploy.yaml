@@ -1,18 +1,22 @@
 name: studentportal build
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'class6/src/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'class6/src/**'
 
   workflow_dispatch:
 
 env:
   AWS_REGION: ap-south-1
   IMAGE_REPO_NAME: 879381241087.dkr.ecr.ap-south-1.amazonaws.com/bootcamp-dev-student-portal
-  IMAGE_TAG: latest
+  IMAGE_TAG: ${{ github.sha }}  # Use the commit SHA as the image tag
+  ECS_APP_CONTAINER_NAME: student-portal
+  ECS_TASK_DEFINITION: dev-student-portal
+  ECS_SERVICE: dev-student-portal-service
+  ECS_CLUSTER: dev-student-portal-cluster
 
 jobs:
     build:
@@ -55,10 +59,30 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: ${{ env.AWS_REGION }}
 
-        - name: Deploy to ECS
+        - name: Download task definition for web
+          if: ${{ github.ref == 'refs/heads/main' }}
           run: |
-            # Assuming you have a script or command to deploy to ECS
-            echo "Deploying to ECS..."
+            aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
+            --query taskDefinition > task-definition.json
+            ls -l task-definition.json
+
+        - name: Fill in the new image ID for web in the Amazon ECS task definition
+          if: ${{ github.ref == 'refs/heads/main' }}
+          id: task-def-web
+          uses: aws-actions/amazon-ecs-render-task-definition@v1
+          with:
+            task-definition: task-definition.json
+            container-name: ${{ env.ECS_APP_CONTAINER_NAME }}
+            image: ${{ env.IMAGE_REPO_NAME }}:${{ github.sha }}
+
+        # - name: Deploy app on Amazon ECS task definition
+        #   if: ${{ github.ref == 'refs/heads/main' }}
+        #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        #   with:
+        #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        #     service: ${{ env.ECS_SERVICE }}
+        #     cluster: ${{ env.ECS_CLUSTER }}
+        #     wait-for-service-stability: true
 
 
           # i will update the task definition with the new image URI
