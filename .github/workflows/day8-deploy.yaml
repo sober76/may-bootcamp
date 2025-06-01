@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'class6/src/**'
+      - '.github/workflows/day8-deploy.yaml'
 
   workflow_dispatch:
 
