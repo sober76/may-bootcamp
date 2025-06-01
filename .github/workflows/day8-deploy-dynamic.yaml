@@ -5,8 +5,7 @@ on:
 
 env:
   environment: "dev"
-  # region: "ap-south-1"
-  secret: "app-deploy-data"
+  secret: "student-portal-deploy-data"
 
 jobs:
   build:
@@ -48,17 +47,13 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: "{{defaultContext}}:app"
-          tags: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ github.sha }}
           build-args: APP_VERSION=${{ github.sha }}
           push: false
 
       - name: Login to Amazon ECR
-        if: ${{ github.ref == 'refs/heads/main' }}
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: true
-          registries: ${{ env.ACCOUNT_ID }}
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v2
 
       - name: Push image to Amazon ECR
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -68,7 +63,7 @@ jobs:
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          # docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
 
