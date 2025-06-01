@@ -66,21 +66,15 @@ jobs:
             aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             --query taskDefinition > task-definition.json
             ls -l task-definition.json
-            cat task-definition.json
-
 
         - name: Fill in the new image ID for web in the Amazon ECS task definition
           if: ${{ github.ref == 'refs/heads/main' }}
           id: task-def-web
           uses: aws-actions/amazon-ecs-render-task-definition@v1
           with:
-            task-definition: task-definition.json
+            task-definition: ${{ env.ECS_TASK_DEFINITION }} 
             container-name: ${{ env.ECS_APP_CONTAINER_NAME }}
             image: ${{ env.IMAGE_REPO_NAME }}:${{ github.sha }}
-
-        - name: cat task definition
-          run: |
-            cat task-definition.json
 
         - name: Deploy app on Amazon ECS task definition
           if: ${{ github.ref == 'refs/heads/main' }}
