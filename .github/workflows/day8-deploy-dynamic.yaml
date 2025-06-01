@@ -86,7 +86,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: ${{ env.ECS_APP_CONTAINER_NAME }}
-          image: $ECR_IMAGE:${{ github.sha }}
+          image: ${{ env.IMAGE_REPO_NAME }}:latest
 
       - name: Deploy app on Amazon ECS task definition
         if: ${{ github.ref == 'refs/heads/main' }}
