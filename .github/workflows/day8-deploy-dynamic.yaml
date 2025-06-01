@@ -60,7 +60,8 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         env:
           ECR_IMAGE: ${{ env.IMAGE_REPO_NAME }}
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          # IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_NAME : "stidentportal"
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_IMAGE:latest

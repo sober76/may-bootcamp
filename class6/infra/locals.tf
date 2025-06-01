@@ -17,6 +17,7 @@ locals {
     ECS_TASK_DEFINITION    = "${var.environment}-${var.app_name}"
     ECS_SERVICE            = "${var.environment}-${var.app_name}-service"
     ECS_CLUSTER            = aws_ecs_cluster.main.id
+    IMAGE_NAME             = "student-portal-app"
   }
 }
 
