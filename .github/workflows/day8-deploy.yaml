@@ -1,12 +1,12 @@
 name: studentportal build-deploy
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'class6/src/**'
-      - '.github/workflows/day8-deploy.yaml'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'class6/src/**'
+  #     - '.github/workflows/day8-deploy.yaml'
 
   workflow_dispatch:
 
