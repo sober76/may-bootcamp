@@ -76,14 +76,18 @@ jobs:
             container-name: ${{ env.ECS_APP_CONTAINER_NAME }}
             image: ${{ env.IMAGE_REPO_NAME }}:${{ github.sha }}
 
-        # - name: Deploy app on Amazon ECS task definition
-        #   if: ${{ github.ref == 'refs/heads/main' }}
-        #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        #   with:
-        #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        #     service: ${{ env.ECS_SERVICE }}
-        #     cluster: ${{ env.ECS_CLUSTER }}
-        #     wait-for-service-stability: true
+        - name: cat task definition
+          run: |
+            cat task-definition.json
+
+        - name: Deploy app on Amazon ECS task definition
+          if: ${{ github.ref == 'refs/heads/main' }}
+          uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+          with:
+            task-definition: ${{ env.ECS_TASK_DEFINITION }}
+            service: ${{ env.ECS_SERVICE }}
+            cluster: ${{ env.ECS_CLUSTER }}
+            wait-for-service-stability: true
 
 
           # i will update the task definition with the new image URI
