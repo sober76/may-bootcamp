@@ -41,7 +41,7 @@ jobs:
 
       - name: test env names
         run: |
-         echo ${{ env.ECR_REGISTRY }}
+         echo ${{ env.IMAGE_REPO_NAME }}
          echo ${{ env.ECS_CLUSTER }}
 
       - name: Build docker container
@@ -59,14 +59,13 @@ jobs:
       - name: Push image to Amazon ECR
         if: ${{ github.ref == 'refs/heads/main' }}
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+          ECR_IMAGE: ${{ env.IMAGE_REPO_NAME }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+          docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_IMAGE:latest
+          docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_IMAGE:$IMAGE_TAG
+          docker push $ECR_IMAGE --all-tags
 
       - name: Download task definition for web
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -82,7 +81,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: ${{ env.ECS_APP_CONTAINER_NAME }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          image: $ECR_IMAGE:${{ github.sha }}
 
       - name: Deploy app on Amazon ECS task definition
         if: ${{ github.ref == 'refs/heads/main' }}
