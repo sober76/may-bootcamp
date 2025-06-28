@@ -28,6 +28,11 @@ variable "ami_name_final" {
   default = "IBM-Golden-nginx"
 }
 
+variable "account_to_share" {
+  description = "List of AWS account IDs to share the AMI with"
+  type    = list(string)
+}
+
 # base image part
 # The source block defines where to start
 source "amazon-ebs" "al2023" {
@@ -35,6 +40,7 @@ source "amazon-ebs" "al2023" {
   ami_description = "Amazon Linux 2023 with Nginx and Docker pre-installed"
   instance_type   = var.instance_type
   region          = var.region
+  ami_users       = var.account_to_share
   
   # Find the latest Amazon Linux 2023 AMI
   source_ami_filter {
