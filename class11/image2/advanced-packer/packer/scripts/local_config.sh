@@ -12,19 +12,7 @@ sudo dnf update -y
 
 # Install basic tools
 echo "Installing basic tools"
-sudo dnf install -y \
-    wget \
-    curl \
-    vim \
-    htop \
-    git \
-    unzip \
-    jq \
-    tar \
-    telnet \
-    net-tools \
-    nmap \
-    lsof
+sudo dnf install -y wget 
 
 # Install Docker
 echo "Installing Docker"
