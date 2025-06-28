@@ -1,4 +1,4 @@
-name: Build AMI with Packer
+name: class 11 Build image1
 
 on:
   # push:
