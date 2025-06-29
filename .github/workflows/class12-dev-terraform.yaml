@@ -36,10 +36,10 @@ jobs:
       #   working-directory: ${{ env.TERRAFORM_PATH }}
       #   run: terraform plan -var-file=vars/dev.tfvars 
 
-      - name: Terraform Apply
-        working-directory: ${{ env.TERRAFORM_PATH }}
-        run: terraform apply -var-file=vars/dev.tfvars -auto-approve
-
-      #  - name: Terraform Destroy
+      # - name: Terraform Apply
       #   working-directory: ${{ env.TERRAFORM_PATH }}
-      #   run: terraform destroy -var-file=vars/dev.tfvars -auto-approve
+      #   run: terraform apply -var-file=vars/dev.tfvars -auto-approve
+
+       - name: Terraform Destroy
+        working-directory: ${{ env.TERRAFORM_PATH }}
+        run: terraform destroy -var-file=vars/dev.tfvars -auto-approve
