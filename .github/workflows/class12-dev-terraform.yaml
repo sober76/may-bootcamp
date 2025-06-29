@@ -1,11 +1,11 @@
 name: class12 Terraform apply on Dev
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - infra/**
+  push:
+    branches:
+      - main
+    paths:
+      - class12/infra/**
   workflow_dispatch:
 
 jobs:

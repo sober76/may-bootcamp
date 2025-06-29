@@ -2,7 +2,7 @@ locals {
   db_data = {
     allocated_storage       = "30"
     max_allocated_storage   = 100
-    engine_version          = "14.10"
+    # engine_version          = "14.10"
     instance_class          = "db.t3.small"
     ca_cert_name            = "rds-ca-rsa2048-g1"
     backup_retention_period = 7
