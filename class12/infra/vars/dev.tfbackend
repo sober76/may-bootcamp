@@ -1,4 +1,4 @@
-bucket         = "366140438193-terraform-state"
-key            = "dev/tfstate"
+bucket         = "state-bucket-879381241087"
+key            = "maybootcamp-class12/dev/tfstate"
 region         = "ap-south-1"
 encrypt        = true
