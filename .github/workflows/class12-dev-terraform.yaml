@@ -1,11 +1,12 @@
 name: class12 Terraform apply on Dev
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - class12/infra/**
+ ## Uncomment the following lines to trigger on push to main branch and specific paths
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - class12/infra/**
   workflow_dispatch:
 
 jobs:
@@ -32,14 +33,17 @@ jobs:
         working-directory: ${{ env.TERRAFORM_PATH }}
         run: terraform init -backend-config=vars/dev.tfbackend
 
-      # - name: Terraform Plan
-      #   working-directory: ${{ env.TERRAFORM_PATH }}
-      #   run: terraform plan -var-file=vars/dev.tfvars 
+      # if only running plan
+      - name: Terraform Plan
+        working-directory: ${{ env.TERRAFORM_PATH }}
+        run: terraform plan -var-file=vars/dev.tfvars 
 
+      ### Uncomment the following lines to apply the Terraform configuration ###
       # - name: Terraform Apply
       #   working-directory: ${{ env.TERRAFORM_PATH }}
       #   run: terraform apply -var-file=vars/dev.tfvars -auto-approve
 
-      - name: Terraform Destroy
-        working-directory: ${{ env.TERRAFORM_PATH }}
-        run: terraform destroy -var-file=vars/dev.tfvars -auto-approve
+      ### Uncomment the following lines to destroy the Terraform configuration ###
+      # - name: Terraform Destroy
+      #   working-directory: ${{ env.TERRAFORM_PATH }}
+      #   run: terraform destroy -var-file=vars/dev.tfvars -auto-approve
