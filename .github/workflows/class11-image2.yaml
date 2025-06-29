@@ -15,7 +15,7 @@ on:
 
 env:
   PACKER_VERSION: v1.12.0
-  WORKING_DIR: class11/image2/advanced-packer
+  WORKING_DIR: class11/image2
 
 jobs:
   validate:
