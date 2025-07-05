@@ -40,7 +40,7 @@ jobs:
         working-directory: ${{ env.TERRAFORM_PATH }}
         run: terraform apply -var-file=vars/${{ env.ENVIRONMENT }}.tfvars -auto-approv
 
-  imgae_build:
+  build-and-push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
