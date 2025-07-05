@@ -38,7 +38,7 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ${{ env.TERRAFORM_PATH }}
-        run: terraform apply -var-file=vars/${{ env.ENVIRONMENT }}.tfvars -auto-approv
+        run: terraform apply -var-file=vars/${{ env.ENVIRONMENT }}.tfvars -auto-approve
 
   build-and-push:
     needs: terraform-prod-apply
