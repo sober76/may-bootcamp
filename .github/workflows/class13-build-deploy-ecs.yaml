@@ -1,4 +1,4 @@
-name: prod build deploy all
+name: class13  prod build deploy all
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   AWS_REGION: ap-south-1
   AWS_ACCOUNT_ID: 879381241087
   APP_NAME: app
-  environment: prod
+  ENVIRONMENT: prod
 
 jobs:
   terraform-prod-apply:
@@ -41,6 +41,7 @@ jobs:
         run: terraform apply -var-file=vars/${{ env.ENVIRONMENT }}.tfvars -auto-approv
 
   build-and-push:
+    needs: terraform-prod-apply
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -58,16 +59,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set environment variables
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "ENVIRONMENT=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
-          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
-          else
-            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
