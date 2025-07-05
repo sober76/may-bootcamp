@@ -11,3 +11,11 @@ terraform {
 provider "aws" {
   region = "ap-south-1"
 }
+terraform{
+backend "s3" {
+    bucket         = "state-bucket-879381241087"
+    key            = "may-bootcamp/class13/terraform/state"
+    region         = "ap-south-1"
+    encrypt        = true
+}
+}
