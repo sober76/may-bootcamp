@@ -17,6 +17,23 @@ terraform plan -var-file=vars/dev.tfvars
 terraform apply -var-file=vars/dev.tfvars
 ```
 
+
+## prod 
+
+### Initialize Terraform
+```bash
+terraform init -backend-config=vars/prod.tfbackend
+```
+
+```bash
+terraform plan -var-file=vars/prod.tfvars
+```
+
+### Apply Terraform Configuration
+```bash
+terraform apply -var-file=vars/prod.tfvars
+```
+
 ### Notes:
 - Ensure the `vars/backend.tfvars` file contains backend configuration details.
 - Ensure the `vars/variables.tfvars` file contains variable definitions required by your Terraform configuration.

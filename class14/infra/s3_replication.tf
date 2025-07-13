@@ -95,8 +95,8 @@
 
 # iam role that can be assumed by s3
 resource "aws_iam_role" "s3_replication_role" {
-for_each = local.s3_replication_info
-  name = "${var.environment}-${each.value.name}-replication-role"
+  for_each = local.s3_replication_info
+  name     = "${var.environment}-${each.value.name}-replication-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -113,7 +113,7 @@ for_each = local.s3_replication_info
 
 # iam policy that will allow replication from source to destination bucket
 resource "aws_iam_policy" "s3_replication_policy" {
-for_each = local.s3_replication_info
+  for_each    = local.s3_replication_info
   name        = "${var.environment}-${each.value.name}-replication-policy"
   description = "Policy to allow S3 replication"
 
@@ -152,14 +152,14 @@ for_each = local.s3_replication_info
 
 # attach the policy to the role
 resource "aws_iam_role_policy_attachment" "s3_replication_role_policy_attachment" {
-for_each = local.s3_replication_info
+  for_each   = local.s3_replication_info
   role       = aws_iam_role.s3_replication_role[each.key].name
   policy_arn = aws_iam_policy.s3_replication_policy[each.key].arn
 }
 
 # # replication_rule
 resource "aws_s3_bucket_replication_configuration" "replication" {
-    for_each = local.s3_replication_info
+  for_each = local.s3_replication_info
   # Must have bucket versioning enabled first
   role   = aws_iam_role.s3_replication_role[each.key].arn
   bucket = "${var.environment}-${each.value.name}-${data.aws_caller_identity.current.account_id}"
@@ -178,8 +178,8 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
       storage_class = "STANDARD"
     }
   }
-    depends_on = [
-        aws_iam_role_policy_attachment.s3_replication_role_policy_attachment,
-        module.buckets
-    ]
+  depends_on = [
+    aws_iam_role_policy_attachment.s3_replication_role_policy_attachment,
+    module.buckets
+  ]
 }
