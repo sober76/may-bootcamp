@@ -1,7 +1,7 @@
 name: class12 Terraform apply on Prod
 
 on:
-  push:
+  # push:
  ## Uncomment the following lines to trigger on push to main branch and specific paths
   # push:
   #   tags:
