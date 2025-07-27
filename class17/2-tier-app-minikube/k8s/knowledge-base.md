@@ -39,3 +39,12 @@ You can verify if a resource is namespaced by using the command:
 kubectl api-resources --namespaced=true   # For namespace-scoped resources
 kubectl api-resources --namespaced=false  # For cluster-scoped resources
 ```
+
+
+
+username: postgres
+db pass word : admin1234
+
+dbname: mydb
+
+db_link: 'postgresql://postgres:admin1234@student-portal.cvik8accw2tk.ap-south-1.rds.amazonaws.com:5432/mydb
